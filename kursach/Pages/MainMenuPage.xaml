@@ -9,7 +9,7 @@
       Title="MainMenuPage">
 
     <Grid Background="Black" >
-        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Top" Background="Wheat" >
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Top" Background="Wheat">
             <TextBlock Text="Куда вы хотите поехать?" Margin="15"/>
             <ComboBox x:Name="SearchBar" Margin="10"/>
             <TextBlock Text="Заезд" Margin="15"/>
@@ -24,12 +24,13 @@
                 <DataTemplate>
                     <Grid Height="60" Width="750">
                         <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                            <Image x:Name="ImageImg" Source="{Binding Image}" Width="100" Height="100"/>
                             <TextBlock x:Name="NameTB" Text="{Binding Name,StringFormat=Название: {0}}" HorizontalAlignment="Center" TextWrapping="Wrap" Margin="0,0,10,30"/>
                             <TextBlock x:Name="CityTB" Text="{Binding City.Name, StringFormat=Город: {0}}" HorizontalAlignment="Center" Margin="0,0,10,30"/>
                             <TextBlock x:Name="StarsTB" Text="{Binding Stars, StringFormat=Звезды: {0}}" HorizontalAlignment="Center" TextWrapping="Wrap" Margin="0,0,10,30"/>
                             <TextBlock x:Name="ContaktTB" Text="{Binding Contakt,StringFormat=Контакт: {0}}" HorizontalAlignment="Center" Margin="0,0,10,30"/>
                             <TextBlock x:Name="AdressTB" Text="{Binding Adress, StringFormat=Адрес: {0}}" HorizontalAlignment="Center" Margin="0,0,10,30"/>
-                            <Button x:Name="AddToAssembly_Btn" Content="Подробнее" Height="20" VerticalAlignment="Top"/>
+                            <Button x:Name="About_Btn" Content="Подробнее" Height="20" VerticalAlignment="Top" Click="About_Btn_Click"/>
                         </StackPanel>
                     </Grid>
                 </DataTemplate>

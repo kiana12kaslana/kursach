@@ -4,12 +4,13 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="Хранилище HotelModel" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="Хранилище HotelModel" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Apartment">
           <Key>
             <PropertyRef Name="ApartmentID" />
           </Key>
           <Property Name="ApartmentID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Image" Type="nvarchar(max)" />
           <Property Name="ApartmentTypeID" Type="int" Nullable="false" />
           <Property Name="Size" Type="int" Nullable="false" />
           <Property Name="Rooms" Type="int" Nullable="false" />
@@ -47,6 +48,7 @@
             <PropertyRef Name="HotelID" />
           </Key>
           <Property Name="HotelID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Image" Type="nvarchar(max)" />
           <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="CityID" Type="int" Nullable="false" />
           <Property Name="Stars" Type="int" Nullable="false" />
@@ -232,8 +234,7 @@
             <End Role="Rating" EntitySet="Rating" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="HotelModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -249,6 +250,7 @@
           <Property Name="Price" Type="Decimal" Precision="18" Scale="0" Nullable="false" />
           <NavigationProperty Name="ApartmentType" Relationship="Self.FK_Apartment_ApartmentType" FromRole="Apartment" ToRole="ApartmentType" />
           <NavigationProperty Name="HotelApartment" Relationship="Self.FK_HotelApartment_Apartment1" FromRole="Apartment" ToRole="HotelApartment" />
+          <Property Name="Image" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="ApartmentType">
           <Key>
@@ -295,6 +297,7 @@
           <NavigationProperty Name="City" Relationship="Self.FK_Hotel1_City" FromRole="Hotel1" ToRole="City" />
           <NavigationProperty Name="HotelApartment" Relationship="Self.FK_HotelApartment_Hotel11" FromRole="Hotel1" ToRole="HotelApartment" />
           <NavigationProperty Name="Rating" Relationship="Self.FK_Rating_Hotel1" FromRole="Hotel1" ToRole="Rating" />
+          <Property Name="Image" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="HotelApartment">
           <Key>
@@ -489,6 +492,7 @@
           <EntitySetMapping Name="Apartment">
             <EntityTypeMapping TypeName="HotelModel.Apartment">
               <MappingFragment StoreEntitySet="Apartment">
+                <ScalarProperty Name="Image" ColumnName="Image" />
                 <ScalarProperty Name="ApartmentID" ColumnName="ApartmentID" />
                 <ScalarProperty Name="ApartmentTypeID" ColumnName="ApartmentTypeID" />
                 <ScalarProperty Name="Size" ColumnName="Size" />
@@ -530,6 +534,7 @@
           <EntitySetMapping Name="Hotel1">
             <EntityTypeMapping TypeName="HotelModel.Hotel1">
               <MappingFragment StoreEntitySet="Hotel1">
+                <ScalarProperty Name="Image" ColumnName="Image" />
                 <ScalarProperty Name="HotelID" ColumnName="HotelID" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="CityID" ColumnName="CityID" />

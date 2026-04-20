@@ -44,6 +44,15 @@ namespace kursach.Pages
             HotelsLB.ItemsSource = hotel;
         }
 
+        private void About_Btn_Click(object sender, RoutedEventArgs e)
+        {
+            var selectHotel = HotelsLB.SelectedItem as Hotel1;
 
+            if (selectHotel == null) return;
+
+            HotelPage page = new HotelPage(selectHotel);
+
+            NavigationService.Navigate(page);
+        }
     }
 }
