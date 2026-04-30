@@ -4,13 +4,14 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="Хранилище HotelModel" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+      <Schema Namespace="Хранилище HotelModel" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Apartment">
           <Key>
             <PropertyRef Name="ApartmentID" />
           </Key>
           <Property Name="ApartmentID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Image" Type="nvarchar(max)" />
+          <Property Name="Name" Type="nvarchar(max)" />
           <Property Name="ApartmentTypeID" Type="int" Nullable="false" />
           <Property Name="Size" Type="int" Nullable="false" />
           <Property Name="Rooms" Type="int" Nullable="false" />
@@ -56,6 +57,7 @@
           <Property Name="Adress" Type="nvarchar(max)" Nullable="false" />
           <Property Name="HaveWiFi" Type="bit" Nullable="false" />
           <Property Name="HaveParking" Type="bit" Nullable="false" />
+          <Property Name="IsActive" Type="bit" />
         </EntityType>
         <EntityType Name="HotelApartment">
           <Key>
@@ -76,6 +78,13 @@
           <Property Name="Number" Type="int" Nullable="false" />
           <Property Name="Comment" Type="nvarchar(max)" Nullable="false" />
         </EntityType>
+        <EntityType Name="Role">
+          <Key>
+            <PropertyRef Name="RoleID" />
+          </Key>
+          <Property Name="RoleID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="RoleName" Type="nvarchar" MaxLength="20" Nullable="false" />
+        </EntityType>
         <EntityType Name="sysdiagrams">
           <Key>
             <PropertyRef Name="diagram_id" />
@@ -94,6 +103,7 @@
           <Property Name="Login" Type="nvarchar" MaxLength="30" Nullable="false" />
           <Property Name="Password" Type="nvarchar" MaxLength="30" Nullable="false" />
           <Property Name="Email" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="RoleID" Type="int" Nullable="false" />
         </EntityType>
         <Association Name="FK_Apartment_ApartmentType">
           <End Role="ApartmentType" Type="Self.ApartmentType" Multiplicity="1" />
@@ -143,7 +153,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_HotelApartment_Apartment1">
+        <Association Name="FK_HotelApartment_Apartment">
           <End Role="Apartment" Type="Self.Apartment" Multiplicity="1" />
           <End Role="HotelApartment" Type="Self.HotelApartment" Multiplicity="*" />
           <ReferentialConstraint>
@@ -155,7 +165,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_HotelApartment_Hotel11">
+        <Association Name="FK_HotelApartment_Hotel1">
           <End Role="Hotel1" Type="Self.Hotel1" Multiplicity="1" />
           <End Role="HotelApartment" Type="Self.HotelApartment" Multiplicity="*" />
           <ReferentialConstraint>
@@ -191,6 +201,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_User_Role">
+          <End Role="Role" Type="Self.Role" Multiplicity="1" />
+          <End Role="User" Type="Self.User" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Role">
+              <PropertyRef Name="RoleID" />
+            </Principal>
+            <Dependent Role="User">
+              <PropertyRef Name="RoleID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <EntityContainer Name="Хранилище HotelModelContainer">
           <EntitySet Name="Apartment" EntityType="Self.Apartment" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ApartmentType" EntityType="Self.ApartmentType" Schema="dbo" store:Type="Tables" />
@@ -199,6 +221,7 @@
           <EntitySet Name="Hotel1" EntityType="Self.Hotel1" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="HotelApartment" EntityType="Self.HotelApartment" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Rating" EntityType="Self.Rating" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Role" EntityType="Self.Role" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="User" EntityType="Self.User" Schema="dbo" store:Type="Tables" />
           <AssociationSet Name="FK_Apartment_ApartmentType" Association="Self.FK_Apartment_ApartmentType">
@@ -217,11 +240,11 @@
             <End Role="City" EntitySet="City" />
             <End Role="Hotel1" EntitySet="Hotel1" />
           </AssociationSet>
-          <AssociationSet Name="FK_HotelApartment_Apartment1" Association="Self.FK_HotelApartment_Apartment1">
+          <AssociationSet Name="FK_HotelApartment_Apartment" Association="Self.FK_HotelApartment_Apartment">
             <End Role="Apartment" EntitySet="Apartment" />
             <End Role="HotelApartment" EntitySet="HotelApartment" />
           </AssociationSet>
-          <AssociationSet Name="FK_HotelApartment_Hotel11" Association="Self.FK_HotelApartment_Hotel11">
+          <AssociationSet Name="FK_HotelApartment_Hotel1" Association="Self.FK_HotelApartment_Hotel1">
             <End Role="Hotel1" EntitySet="Hotel1" />
             <End Role="HotelApartment" EntitySet="HotelApartment" />
           </AssociationSet>
@@ -233,8 +256,13 @@
             <End Role="User" EntitySet="User" />
             <End Role="Rating" EntitySet="Rating" />
           </AssociationSet>
+          <AssociationSet Name="FK_User_Role" Association="Self.FK_User_Role">
+            <End Role="Role" EntitySet="Role" />
+            <End Role="User" EntitySet="User" />
+          </AssociationSet>
         </EntityContainer>
-      </Schema></edmx:StorageModels>
+      </Schema>
+    </edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="HotelModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -243,14 +271,15 @@
             <PropertyRef Name="ApartmentID" />
           </Key>
           <Property Name="ApartmentID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Image" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Name" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="ApartmentTypeID" Type="Int32" Nullable="false" />
           <Property Name="Size" Type="Int32" Nullable="false" />
           <Property Name="Rooms" Type="Int32" Nullable="false" />
           <Property Name="HaveBreakfast" Type="Boolean" Nullable="false" />
           <Property Name="Price" Type="Decimal" Precision="18" Scale="0" Nullable="false" />
           <NavigationProperty Name="ApartmentType" Relationship="Self.FK_Apartment_ApartmentType" FromRole="Apartment" ToRole="ApartmentType" />
-          <NavigationProperty Name="HotelApartment" Relationship="Self.FK_HotelApartment_Apartment1" FromRole="Apartment" ToRole="HotelApartment" />
-          <Property Name="Image" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="HotelApartment" Relationship="Self.FK_HotelApartment_Apartment" FromRole="Apartment" ToRole="HotelApartment" />
         </EntityType>
         <EntityType Name="ApartmentType">
           <Key>
@@ -287,6 +316,7 @@
             <PropertyRef Name="HotelID" />
           </Key>
           <Property Name="HotelID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Image" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="CityID" Type="Int32" Nullable="false" />
           <Property Name="Stars" Type="Int32" Nullable="false" />
@@ -294,10 +324,10 @@
           <Property Name="Adress" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="HaveWiFi" Type="Boolean" Nullable="false" />
           <Property Name="HaveParking" Type="Boolean" Nullable="false" />
+          <Property Name="IsActive" Type="Boolean" />
           <NavigationProperty Name="City" Relationship="Self.FK_Hotel1_City" FromRole="Hotel1" ToRole="City" />
-          <NavigationProperty Name="HotelApartment" Relationship="Self.FK_HotelApartment_Hotel11" FromRole="Hotel1" ToRole="HotelApartment" />
+          <NavigationProperty Name="HotelApartment" Relationship="Self.FK_HotelApartment_Hotel1" FromRole="Hotel1" ToRole="HotelApartment" />
           <NavigationProperty Name="Rating" Relationship="Self.FK_Rating_Hotel1" FromRole="Hotel1" ToRole="Rating" />
-          <Property Name="Image" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="HotelApartment">
           <Key>
@@ -307,9 +337,9 @@
           <Property Name="HotelID" Type="Int32" Nullable="false" />
           <Property Name="ApartmentID" Type="Int32" Nullable="false" />
           <Property Name="Amount" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="Apartment" Relationship="Self.FK_HotelApartment_Apartment1" FromRole="HotelApartment" ToRole="Apartment" />
+          <NavigationProperty Name="Apartment" Relationship="Self.FK_HotelApartment_Apartment" FromRole="HotelApartment" ToRole="Apartment" />
           <NavigationProperty Name="Booking" Relationship="Self.FK_Booking_HotelApartment" FromRole="HotelApartment" ToRole="Booking" />
-          <NavigationProperty Name="Hotel1" Relationship="Self.FK_HotelApartment_Hotel11" FromRole="HotelApartment" ToRole="Hotel1" />
+          <NavigationProperty Name="Hotel1" Relationship="Self.FK_HotelApartment_Hotel1" FromRole="HotelApartment" ToRole="Hotel1" />
         </EntityType>
         <EntityType Name="Rating">
           <Key>
@@ -322,6 +352,14 @@
           <Property Name="Comment" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
           <NavigationProperty Name="Hotel1" Relationship="Self.FK_Rating_Hotel1" FromRole="Rating" ToRole="Hotel1" />
           <NavigationProperty Name="User" Relationship="Self.FK_Rating_User" FromRole="Rating" ToRole="User" />
+        </EntityType>
+        <EntityType Name="Role">
+          <Key>
+            <PropertyRef Name="RoleID" />
+          </Key>
+          <Property Name="RoleID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="RoleName" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="User" Relationship="Self.FK_User_Role" FromRole="Role" ToRole="User" />
         </EntityType>
         <EntityType Name="sysdiagrams">
           <Key>
@@ -341,8 +379,10 @@
           <Property Name="Login" Type="String" MaxLength="30" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="Password" Type="String" MaxLength="30" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="RoleID" Type="Int32" Nullable="false" />
           <NavigationProperty Name="Booking" Relationship="Self.FK_Booking_User" FromRole="User" ToRole="Booking" />
           <NavigationProperty Name="Rating" Relationship="Self.FK_Rating_User" FromRole="User" ToRole="Rating" />
+          <NavigationProperty Name="Role" Relationship="Self.FK_User_Role" FromRole="User" ToRole="Role" />
         </EntityType>
         <Association Name="FK_Apartment_ApartmentType">
           <End Role="ApartmentType" Type="Self.ApartmentType" Multiplicity="1" />
@@ -356,7 +396,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_HotelApartment_Apartment1">
+        <Association Name="FK_HotelApartment_Apartment">
           <End Role="Apartment" Type="Self.Apartment" Multiplicity="1" />
           <End Role="HotelApartment" Type="Self.HotelApartment" Multiplicity="*" />
           <ReferentialConstraint>
@@ -404,7 +444,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_HotelApartment_Hotel11">
+        <Association Name="FK_HotelApartment_Hotel1">
           <End Role="Hotel1" Type="Self.Hotel1" Multiplicity="1" />
           <End Role="HotelApartment" Type="Self.HotelApartment" Multiplicity="*" />
           <ReferentialConstraint>
@@ -440,6 +480,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_User_Role">
+          <End Role="Role" Type="Self.Role" Multiplicity="1" />
+          <End Role="User" Type="Self.User" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Role">
+              <PropertyRef Name="RoleID" />
+            </Principal>
+            <Dependent Role="User">
+              <PropertyRef Name="RoleID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <EntityContainer Name="HotelEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="Apartment" EntityType="Self.Apartment" />
           <EntitySet Name="ApartmentType" EntityType="Self.ApartmentType" />
@@ -448,13 +500,14 @@
           <EntitySet Name="Hotel1" EntityType="Self.Hotel1" />
           <EntitySet Name="HotelApartment" EntityType="Self.HotelApartment" />
           <EntitySet Name="Rating" EntityType="Self.Rating" />
+          <EntitySet Name="Role" EntityType="Self.Role" />
           <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" />
           <EntitySet Name="User" EntityType="Self.User" />
           <AssociationSet Name="FK_Apartment_ApartmentType" Association="Self.FK_Apartment_ApartmentType">
             <End Role="ApartmentType" EntitySet="ApartmentType" />
             <End Role="Apartment" EntitySet="Apartment" />
           </AssociationSet>
-          <AssociationSet Name="FK_HotelApartment_Apartment1" Association="Self.FK_HotelApartment_Apartment1">
+          <AssociationSet Name="FK_HotelApartment_Apartment" Association="Self.FK_HotelApartment_Apartment">
             <End Role="Apartment" EntitySet="Apartment" />
             <End Role="HotelApartment" EntitySet="HotelApartment" />
           </AssociationSet>
@@ -470,7 +523,7 @@
             <End Role="City" EntitySet="City" />
             <End Role="Hotel1" EntitySet="Hotel1" />
           </AssociationSet>
-          <AssociationSet Name="FK_HotelApartment_Hotel11" Association="Self.FK_HotelApartment_Hotel11">
+          <AssociationSet Name="FK_HotelApartment_Hotel1" Association="Self.FK_HotelApartment_Hotel1">
             <End Role="Hotel1" EntitySet="Hotel1" />
             <End Role="HotelApartment" EntitySet="HotelApartment" />
           </AssociationSet>
@@ -482,6 +535,10 @@
             <End Role="User" EntitySet="User" />
             <End Role="Rating" EntitySet="Rating" />
           </AssociationSet>
+          <AssociationSet Name="FK_User_Role" Association="Self.FK_User_Role">
+            <End Role="Role" EntitySet="Role" />
+            <End Role="User" EntitySet="User" />
+          </AssociationSet>
         </EntityContainer>
       </Schema>
     </edmx:ConceptualModels>
@@ -492,8 +549,9 @@
           <EntitySetMapping Name="Apartment">
             <EntityTypeMapping TypeName="HotelModel.Apartment">
               <MappingFragment StoreEntitySet="Apartment">
-                <ScalarProperty Name="Image" ColumnName="Image" />
                 <ScalarProperty Name="ApartmentID" ColumnName="ApartmentID" />
+                <ScalarProperty Name="Image" ColumnName="Image" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="ApartmentTypeID" ColumnName="ApartmentTypeID" />
                 <ScalarProperty Name="Size" ColumnName="Size" />
                 <ScalarProperty Name="Rooms" ColumnName="Rooms" />
@@ -534,8 +592,8 @@
           <EntitySetMapping Name="Hotel1">
             <EntityTypeMapping TypeName="HotelModel.Hotel1">
               <MappingFragment StoreEntitySet="Hotel1">
-                <ScalarProperty Name="Image" ColumnName="Image" />
                 <ScalarProperty Name="HotelID" ColumnName="HotelID" />
+                <ScalarProperty Name="Image" ColumnName="Image" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="CityID" ColumnName="CityID" />
                 <ScalarProperty Name="Stars" ColumnName="Stars" />
@@ -543,6 +601,7 @@
                 <ScalarProperty Name="Adress" ColumnName="Adress" />
                 <ScalarProperty Name="HaveWiFi" ColumnName="HaveWiFi" />
                 <ScalarProperty Name="HaveParking" ColumnName="HaveParking" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -567,6 +626,14 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="Role">
+            <EntityTypeMapping TypeName="HotelModel.Role">
+              <MappingFragment StoreEntitySet="Role">
+                <ScalarProperty Name="RoleID" ColumnName="RoleID" />
+                <ScalarProperty Name="RoleName" ColumnName="RoleName" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="sysdiagrams">
             <EntityTypeMapping TypeName="HotelModel.sysdiagrams">
               <MappingFragment StoreEntitySet="sysdiagrams">
@@ -585,6 +652,7 @@
                 <ScalarProperty Name="Login" ColumnName="Login" />
                 <ScalarProperty Name="Password" ColumnName="Password" />
                 <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="RoleID" ColumnName="RoleID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

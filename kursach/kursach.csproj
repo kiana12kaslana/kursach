@@ -79,6 +79,7 @@
     <Compile Include="City.cs">
       <DependentUpon>Hotel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Classes\State.cs" />
     <Compile Include="Hotel.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -100,6 +101,12 @@
     <Compile Include="HotelApartment.cs">
       <DependentUpon>Hotel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Pages\AdminPage.xaml.cs">
+      <DependentUpon>AdminPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\BookingPage.xaml.cs">
+      <DependentUpon>BookingPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Pages\HotelPage.xaml.cs">
       <DependentUpon>HotelPage.xaml</DependentUpon>
     </Compile>
@@ -110,6 +117,9 @@
       <DependentUpon>ProfilePage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Rating.cs">
+      <DependentUpon>Hotel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Role.cs">
       <DependentUpon>Hotel.tt</DependentUpon>
     </Compile>
     <Compile Include="sysdiagrams.cs">
@@ -131,6 +141,14 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="Pages\AdminPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\BookingPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Pages\HotelPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -203,6 +221,19 @@
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <ItemGroup>
+    <Resource Include="Images\Apartment_improved_1.png" />
+    <Resource Include="Images\Apartment_improved_2.png" />
+    <Resource Include="Images\Apartment_luxery_1.png" />
+    <Resource Include="Images\Apartment_luxery_2.png" />
+    <Resource Include="Images\Apartment_regular_1.png" />
+    <Resource Include="Images\Apartment_regular_2.png" />
+    <Resource Include="Images\Apartment_standart_1.png" />
+    <Resource Include="Images\Apartment_standart_2.png" />
+    <Resource Include="Images\Hotel_Demetra.png" />
+    <Resource Include="Images\Hotel_Lastadie.png" />
+    <Resource Include="Images\Hotel_Strominka.png" />
+  </ItemGroup>
+  <ItemGroup>
     <Content Include="Hotel.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>Hotel.edmx</DependentUpon>
@@ -213,19 +244,7 @@
       <DependentUpon>Hotel.edmx</DependentUpon>
       <LastGenOutput>Hotel.cs</LastGenOutput>
     </Content>
-    <Resource Include="Images\Apartment_improved_1.png" />
-    <Resource Include="Images\Apartment_improved_2.png" />
-    <Resource Include="Images\Apartment_luxery_1.png" />
-    <Resource Include="Images\Apartment_luxery_2.png" />
-    <Resource Include="Images\Apartment_regular_1.png" />
-    <Resource Include="Images\Apartment_regular_2.png" />
-    <Resource Include="Images\Apartment_standart_1.png" />
-    <Resource Include="Images\Apartment_standart_2.png" />
-    <Resource Include="Images\Hotel_Dementra.png" />
-    <Resource Include="Images\Hotel_Lastadie.png" />
-    <Resource Include="Images\Hotel_Strominka.png" />
   </ItemGroup>
-  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>

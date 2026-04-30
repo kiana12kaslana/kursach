@@ -32,6 +32,7 @@ namespace kursach
         public virtual DbSet<Hotel1> Hotel1 { get; set; }
         public virtual DbSet<HotelApartment> HotelApartment { get; set; }
         public virtual DbSet<Rating> Rating { get; set; }
+        public virtual DbSet<Role> Role { get; set; }
         public virtual DbSet<sysdiagrams> sysdiagrams { get; set; }
         public virtual DbSet<User> User { get; set; }
     }

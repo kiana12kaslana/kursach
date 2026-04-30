@@ -8,9 +8,36 @@
       d:DesignHeight="450" d:DesignWidth="800"
       Title="HotelPage">
 
-    <Grid>
-
-        <TextBlock x:Name="hoteln" Text="{Binding hotelname}"/>
-        <Button x:Name="BackBtn" Content="Назад" Width="100" Height="100" Click="BackBtn_Click"/>
+    <Grid Background="Black">
+        <Border Padding="0" HorizontalAlignment="Center" VerticalAlignment="Center" MinWidth="200" Width="700" Height="300" Margin="15" Background="Wheat" CornerRadius="20">
+            <StackPanel>
+                <StackPanel>
+                    <TextBlock x:Name="hoteln" Text="{Binding hotelname}" VerticalAlignment="Top" Margin="10" HorizontalAlignment="Center"/>
+                    <TextBlock x:Name="MoreDetailed" Text="Все номера отеля" VerticalAlignment="Top" HorizontalAlignment="Center"/>
+                    <Button x:Name="BackBtn" Content="Назад" Width="50" Height="25" Click="BackBtn_Click"/>
+                </StackPanel>
+                <ListBox x:Name="AprtmentsLB" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollBarVisibility="Hidden" VerticalAlignment="Top" Margin="10,60,10,10" Height="120">
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <Grid Height="60" Width="720">
+                                <WrapPanel Orientation="Horizontal" VerticalAlignment="Center">
+                                    <Image x:Name="ImageImg" Source="{Binding Image}" Width="100" Height="100" VerticalAlignment="Center" Margin="0,0,10,0"/>
+                                    <TextBlock x:Name="Name" Text="{Binding Name,StringFormat=Вид комнаты: {0}}" HorizontalAlignment="Center" TextWrapping="Wrap" Margin="0,0,10,30"/>
+                                    <TextBlock x:Name="Rooms" Text="{Binding Rooms, StringFormat=Комнаты: {0}}" HorizontalAlignment="Center" TextWrapping="Wrap" Margin="0,0,10,30"/>
+                                    <TextBlock x:Name="Size" Text="{Binding Size, StringFormat=Размер комнаты: {0}}" HorizontalAlignment="Center" TextWrapping="Wrap" Margin="0,0,10,30"/>
+                                    <TextBlock x:Name="HaveBreakfast" Text="{Binding HaveBreakfast,StringFormat=Есть ли завтрак: {0}}" HorizontalAlignment="Center" Margin="0,0,10,30" TextWrapping="Wrap"/>
+                                    <TextBlock x:Name="Price" Text="{Binding Price,StringFormat=Цена: {0}}" HorizontalAlignment="Center" Margin="0,0,10,30" TextWrapping="Wrap"/>
+                                </WrapPanel>
+                            </Grid>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                    <ListBox.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <WrapPanel/>
+                        </ItemsPanelTemplate>
+                    </ListBox.ItemsPanel>
+                </ListBox>
+            </StackPanel>
+        </Border>
     </Grid>
 </Page>

@@ -17,7 +17,6 @@
                     <Button x:Name="LoginBtn" HorizontalAlignment="Left" Content="Войти" Click="LoginBtn_Click" Height="20" Margin="403,0,0,0" VerticalAlignment="Top" ></Button>
                 </Grid>
             </StackPanel>
-
         </Border>
     </Grid>
 </Page>

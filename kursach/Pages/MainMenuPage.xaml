@@ -8,29 +8,29 @@
       d:DesignHeight="450" d:DesignWidth="800"
       Title="MainMenuPage">
 
-    <Grid Background="Black" >
+    <Grid Background="Black">
         <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Top" Background="Wheat">
             <TextBlock Text="Куда вы хотите поехать?" Margin="15"/>
-            <ComboBox x:Name="SearchBar" Margin="10"/>
+            <ComboBox x:Name="SearchBar" Margin="10" SelectionChanged="SearchBar_SelectionChanged"/>
             <TextBlock Text="Заезд" Margin="15"/>
             <DatePicker x:Name="Check_in" Margin="10" IsDropDownOpen="False" SelectedDateFormat="Short" />
             <TextBlock Text="Выезд" Margin="15" TextAlignment="Center"/>
             <DatePicker x:Name="Check_out"  Margin="10" IsDropDownOpen="False" SelectedDateFormat="Short" />
             <TextBlock  Text="Количество" Margin="15"/>
             <ComboBox x:Name="Quality" Margin="15" Width="40"/>
+            <Button Content="Ваш профиль" Width="80" Height="20" Click="Button_Click" />
         </StackPanel>
-        <ListBox x:Name="HotelsLB" ItemsSource="{Binding Path=hotels}" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollBarVisibility="Hidden" VerticalAlignment="Top" Margin="10,60,10,10" Height="350">
+        <ListBox x:Name="HotelsLB" ItemsSource="{Binding Path=hotels}" MouseDoubleClick="HotelsLB_MouseDoubleClick" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollBarVisibility="Hidden" VerticalAlignment="Top" Margin="10,60,10,10" Height="350">
             <ListBox.ItemTemplate>
                 <DataTemplate>
                     <Grid Height="60" Width="750">
                         <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
-                            <Image x:Name="ImageImg" Source="{Binding Image}" Width="100" Height="100"/>
-                            <TextBlock x:Name="NameTB" Text="{Binding Name,StringFormat=Название: {0}}" HorizontalAlignment="Center" TextWrapping="Wrap" Margin="0,0,10,30"/>
+                            <Image x:Name="ImageImg" Source="{Binding Image}" Width="100" Height="100" VerticalAlignment="Center"/>
+                            <TextBlock x:Name="NameTB" Text="{Binding Name,StringFormat=Название: {0}}" HorizontalAlignment="Center" TextWrapping="Wrap" Margin="10,0,10,30"/>
                             <TextBlock x:Name="CityTB" Text="{Binding City.Name, StringFormat=Город: {0}}" HorizontalAlignment="Center" Margin="0,0,10,30"/>
                             <TextBlock x:Name="StarsTB" Text="{Binding Stars, StringFormat=Звезды: {0}}" HorizontalAlignment="Center" TextWrapping="Wrap" Margin="0,0,10,30"/>
                             <TextBlock x:Name="ContaktTB" Text="{Binding Contakt,StringFormat=Контакт: {0}}" HorizontalAlignment="Center" Margin="0,0,10,30"/>
                             <TextBlock x:Name="AdressTB" Text="{Binding Adress, StringFormat=Адрес: {0}}" HorizontalAlignment="Center" Margin="0,0,10,30"/>
-                            <Button x:Name="About_Btn" Content="Подробнее" Height="20" VerticalAlignment="Top" Click="About_Btn_Click"/>
                         </StackPanel>
                     </Grid>
                 </DataTemplate>

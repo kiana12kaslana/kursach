@@ -33,16 +33,27 @@ namespace kursach.Pages
         private void EnterBtn_Click(object sender, RoutedEventArgs e)
         {
             List <User> users = Core.Context.User.ToList();
-            try
+            User curruser = users.FirstOrDefault(u => u.Login == LoginTB.Text);
+
+            if (curruser != null)
             {
-                User curruser = users.First(u => u.Login == LoginTB.Text);
                 if (curruser.Password == PasswordTB.Text)
                 {
-                    NavigationService.Navigate(new MainMenuPage());
+                    State.curr_user_id = curruser.UserID;
+                    State.is_registered = true;
+
+                    if (curruser.Role.RoleName == "Admin")
+                    {
+                        NavigationService.Navigate(new AdminPage());
+                    }
+                    else
+                    {
+                        NavigationService.Navigate(new MainMenuPage());
+                    }
                 }
                 else { MessageBox.Show("Неправилльный логин или пароль"); }
             }
-            catch { MessageBox.Show("Неправилльный логин или пароль"); }
+            else { MessageBox.Show("Неправилльный логин или пароль"); }
         }
     }
 }

@@ -21,12 +21,13 @@ namespace kursach
         }
     
         public int ApartmentID { get; set; }
+        public string Image { get; set; }
+        public string Name { get; set; }
         public int ApartmentTypeID { get; set; }
         public int Size { get; set; }
         public int Rooms { get; set; }
         public bool HaveBreakfast { get; set; }
         public decimal Price { get; set; }
-        public string Image { get; set; }
     
         public virtual ApartmentType ApartmentType { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

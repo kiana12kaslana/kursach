@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -27,7 +28,8 @@ namespace kursach.Pages
             { 
                 "Москва",
                 "Питер",
-                "Калининград"
+                "Калининград",
+                "Куда-то"
             };
             SearchBar.ItemsSource = Cities;
 
@@ -40,11 +42,11 @@ namespace kursach.Pages
             };
             Quality.ItemsSource = Guest;
 
-            List<Hotel1> hotel = Core.Context.Hotel1.ToList();
+            List<Hotel1> hotel = Core.Context.Hotel1.Where(h => h.IsActive == true).ToList();
             HotelsLB.ItemsSource = hotel;
         }
 
-        private void About_Btn_Click(object sender, RoutedEventArgs e)
+        private void HotelsLB_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
             var selectHotel = HotelsLB.SelectedItem as Hotel1;
 
@@ -53,6 +55,27 @@ namespace kursach.Pages
             HotelPage page = new HotelPage(selectHotel);
 
             NavigationService.Navigate(page);
+        }
+
+        private void SearchBar_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            var selectHotel = SearchBar.SelectedItem as string;
+
+            if (selectHotel == "Куда-то")
+            {
+                List<Hotel1> hotel = Core.Context.Hotel1.Where(h => h.IsActive == true).ToList();
+                HotelsLB.ItemsSource = hotel;
+            }
+            else
+            {
+                List<Hotel1> selectedHotels = Core.Context.Hotel1.Where(x => x.City.Name == selectHotel && x.IsActive == true).ToList();
+                HotelsLB.ItemsSource = selectedHotels;
+            }
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            NavigationService.Navigate(new ProfilePage());
         }
     }
 }

@@ -12,30 +12,18 @@ namespace kursach
     using System;
     using System.Collections.Generic;
     
-    public partial class Hotel1
+    public partial class Role
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Hotel1()
+        public Role()
         {
-            this.HotelApartment = new HashSet<HotelApartment>();
-            this.Rating = new HashSet<Rating>();
+            this.User = new HashSet<User>();
         }
     
-        public int HotelID { get; set; }
-        public string Image { get; set; }
-        public string Name { get; set; }
-        public int CityID { get; set; }
-        public int Stars { get; set; }
-        public string Contakt { get; set; }
-        public string Adress { get; set; }
-        public bool HaveWiFi { get; set; }
-        public bool HaveParking { get; set; }
-        public Nullable<bool> IsActive { get; set; }
+        public int RoleID { get; set; }
+        public string RoleName { get; set; }
     
-        public virtual City City { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<HotelApartment> HotelApartment { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Rating> Rating { get; set; }
+        public virtual ICollection<User> User { get; set; }
     }
 }
