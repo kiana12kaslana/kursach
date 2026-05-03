@@ -8,7 +8,55 @@
       d:DesignHeight="450" d:DesignWidth="800"
       Title="BookingPage">
 
-    <Grid>
-        
+    <Grid Background="Black">
+        <Border Padding="30" HorizontalAlignment="Center" VerticalAlignment="Center" MinWidth="200" Margin="15" Background="Wheat" MaxWidth="500" CornerRadius="20" >
+            <StackPanel>
+                <TextBlock Text="Оформление бронирования" FontSize="20" FontWeight="Bold" HorizontalAlignment="Center" Margin="0,0,0,20"/>
+
+                <StackPanel Orientation="Horizontal" Margin="0,5">
+                    <TextBlock Text="Отель: " FontWeight="Bold"/>
+                    <TextBlock x:Name="HotelNameTB" Text="Название отеля"/>
+                </StackPanel>
+
+                <StackPanel Orientation="Horizontal" Margin="0,5">
+                    <TextBlock Text="Номер: " FontWeight="Bold"/>
+                    <TextBlock x:Name="ApartmentNameTB" Text="Тип комнаты"/>
+                </StackPanel>
+
+                <StackPanel Orientation="Horizontal" Margin="0,5">
+                    <TextBlock Text="Цена за сутки: " FontWeight="Bold"/>
+                    <TextBlock x:Name="PriceTB" Text="0"/>
+                    <TextBlock Text=" руб."/>
+                </StackPanel>
+
+                <Separator Margin="0,15"/>
+
+                <TextBlock Text="Выберите даты проживания:" Margin="0,10,0,5"/>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <StackPanel Grid.Column="0" Margin="0,0,5,0">
+                        <TextBlock Text="Заезд" FontSize="10"/>
+                        <DatePicker x:Name="DateStartDP" />
+                    </StackPanel>
+                    <StackPanel Grid.Column="1" Margin="5,0,0,0">
+                        <TextBlock Text="Выезд" FontSize="10"/>
+                        <DatePicker x:Name="DateEndDP" />
+                    </StackPanel>
+                </Grid>
+
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,20,0,0">
+                    <TextBlock Text="Итого: " FontSize="16" FontWeight="Bold"/>
+                    <TextBlock x:Name="TotalSumTB" Text="0" FontSize="16" FontWeight="Bold" Foreground="DarkRed"/>
+                    <TextBlock Text=" руб." FontSize="16" FontWeight="Bold" Foreground="DarkRed"/>
+                </StackPanel>
+
+                <Button x:Name="ConfirmBookingBtn" Content="Подтвердить бронирование" 
+            Margin="0,20,0,0" Height="35" Background="DarkGreen" Foreground="White" 
+            Click="ConfirmBookingBtn_Click"/>
+            </StackPanel>
+        </Border>
     </Grid>
 </Page>

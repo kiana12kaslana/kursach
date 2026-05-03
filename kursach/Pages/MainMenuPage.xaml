@@ -5,7 +5,7 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:kursach.Pages"
       mc:Ignorable="d" 
-      d:DesignHeight="450" d:DesignWidth="800"
+      d:DesignHeight="600" d:DesignWidth="1000"
       Title="MainMenuPage">
 
     <Grid Background="Black">
@@ -19,6 +19,10 @@
             <TextBlock  Text="Количество" Margin="15"/>
             <ComboBox x:Name="Quality" Margin="15" Width="40"/>
             <Button Content="Ваш профиль" Width="80" Height="20" Click="Button_Click" />
+            <TextBlock Text="Wi-Fi" Margin="10,15,0,0"/>
+            <ComboBox x:Name="WiFiST" Width="60" Margin="15" SelectionChanged="SearchBar_SelectionChanged"/>
+            <TextBlock Text="Парковка" Margin="15"/>
+            <ComboBox x:Name="ParkingTB" Width="60" Margin="15" SelectionChanged="SearchBar_SelectionChanged"/>
         </StackPanel>
         <ListBox x:Name="HotelsLB" ItemsSource="{Binding Path=hotels}" MouseDoubleClick="HotelsLB_MouseDoubleClick" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollBarVisibility="Hidden" VerticalAlignment="Top" Margin="10,60,10,10" Height="350">
             <ListBox.ItemTemplate>

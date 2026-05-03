@@ -9,6 +9,6 @@
       Title="AdminPage">
 
     <Grid>
-        <Button x:Name="BackBtn" Content="Возвращение"  HorizontalAlignment="Left" Margin="0,0,70,0" Click="BackBtn_Click"/>
+        <Button x:Name="BackBtn" Content="Возвращение"  HorizontalAlignment="Center" Margin="0,0,70,0" Click="BackBtn_Click" VerticalAlignment="Center"/>
     </Grid>
 </Page>

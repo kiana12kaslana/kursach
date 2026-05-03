@@ -47,6 +47,15 @@ namespace kursach.Pages
         {
             NavigationService.GoBack();
         }
+        private void AprtmentsLB_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            var selectedApartment = AprtmentsLB.SelectedItem as Apartment;
+
+            if (selectedApartment == null) return;
+
+            NavigationService.Navigate(new BookingPage(this.selectHotel, selectedApartment));
+        }
+
 
         //private void BookingPageLB_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         //{

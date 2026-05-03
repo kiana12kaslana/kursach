@@ -16,7 +16,7 @@
                     <TextBlock x:Name="MoreDetailed" Text="Все номера отеля" VerticalAlignment="Top" HorizontalAlignment="Center"/>
                     <Button x:Name="BackBtn" Content="Назад" Width="50" Height="25" Click="BackBtn_Click"/>
                 </StackPanel>
-                <ListBox x:Name="AprtmentsLB" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollBarVisibility="Hidden" VerticalAlignment="Top" Margin="10,60,10,10" Height="120">
+                <ListBox x:Name="AprtmentsLB" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollBarVisibility="Hidden" VerticalAlignment="Top" Margin="10,60,10,10" Height="120" MouseDoubleClick="AprtmentsLB_MouseDoubleClick">
                     <ListBox.ItemTemplate>
                         <DataTemplate>
                             <Grid Height="60" Width="720">

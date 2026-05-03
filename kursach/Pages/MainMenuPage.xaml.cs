@@ -1,6 +1,9 @@
-﻿using System;
+﻿using kursach;
+using kursach.Pages;
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Data.Entity.Infrastructure;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -25,7 +28,7 @@ namespace kursach.Pages
         {
             InitializeComponent();
             List<string> Cities = new List<string>
-            { 
+            {
                 "Москва",
                 "Питер",
                 "Калининград",
@@ -41,6 +44,22 @@ namespace kursach.Pages
                 "4"
             };
             Quality.ItemsSource = Guest;
+
+            List<string> WiFi = new List<string>
+            {
+                "Да",
+                "Нет",
+                "Неважно"
+            };
+            WiFiST.ItemsSource = WiFi;
+
+            List<string> Parking = new List<string>
+            {
+                "Да",
+                "Нет",
+                "Неважно"
+            };
+            ParkingTB.ItemsSource = Parking;
 
             List<Hotel1> hotel = Core.Context.Hotel1.Where(h => h.IsActive == true).ToList();
             HotelsLB.ItemsSource = hotel;
@@ -60,17 +79,37 @@ namespace kursach.Pages
         private void SearchBar_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             var selectHotel = SearchBar.SelectedItem as string;
+            var WiFiReq = WiFiST.SelectedItem as string;
+            var ParkingReq = ParkingTB.SelectedItem as string;
 
-            if (selectHotel == "Куда-то")
+            List<Hotel1> currentList;
+
+            if (selectHotel == "Куда-то" || selectHotel == null)
             {
-                List<Hotel1> hotel = Core.Context.Hotel1.Where(h => h.IsActive == true).ToList();
-                HotelsLB.ItemsSource = hotel;
+                currentList = Core.Context.Hotel1.ToList();
             }
             else
             {
-                List<Hotel1> selectedHotels = Core.Context.Hotel1.Where(x => x.City.Name == selectHotel && x.IsActive == true).ToList();
-                HotelsLB.ItemsSource = selectedHotels;
+                currentList = Core.Context.Hotel1.Where(x => x.City.Name == selectHotel).ToList();
             }
+
+            if (WiFiReq == "Да")
+            {
+                currentList = currentList.Where(z => z.HaveWiFi == true).ToList();
+            }
+            else if (WiFiReq == "Нет")
+            {
+                currentList = currentList.Where(z => z.HaveWiFi == false).ToList();
+            }
+            if (ParkingReq == "Да")
+            { 
+                currentList = currentList.Where(y => y.HaveParking == true ).ToList();
+            }
+            else if (ParkingReq == "Нет")
+            {
+                currentList = currentList.Where(y => y.HaveParking == false).ToList();
+            }
+            HotelsLB.ItemsSource = currentList;
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
